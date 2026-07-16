@@ -1,0 +1,16 @@
+{
+  "name": "shopmax-ecommerce",
+  "version": "1.0.0",
+  "private": true,
+  "description": "🛍️ ShopMax - Ecommerce completo con React + Vite + TypeScript + MongoDB",
+  "scripts": {
+    "dev:frontend": "pnpm --dir frontend dev",
+    "dev:backend": "pnpm --dir backend dev",
+    "dev": "echo '⚠️  Debes ejecutar DOS terminales:\n  Terminal 1: pnpm dev:backend\n  Terminal 2: pnpm dev:frontend'",
+    "build": "pnpm --dir frontend build",
+    "install:all": "pnpm --dir frontend install && pnpm --dir backend install",
+    "setup": "pnpm install:all && echo ✅ Listo! Ejecuta en terminales separadas: pnpm dev:backend  y  pnpm dev:frontend"
+  },
+  "keywords": ["ecommerce", "react", "mongodb", "typescript", "shopmax"],
+  "author": "ShopMax Team"
+}

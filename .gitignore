@@ -1,0 +1,37 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Entorno
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+frontend/dist/
+backend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Uploads locales (mantener estructura pero ignorar imágenes descargadas)
+uploads/mapa-imagenes.json
+uploads/productos/**/*.jpg
+uploads/productos/**/*.png
+uploads/productos/**/*.gif
+uploads/productos/**/*.webp
+backend/uploads/*.jpg
+backend/uploads/*.png
+backend/uploads/*.gif
+backend/uploads/*.webp
+
+# Base de datos local
+data/

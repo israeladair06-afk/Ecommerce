@@ -1,0 +1,87 @@
+[
+  {
+    "carpeta": "auriculares-bluetooth",
+    "imagenes": [
+      "/uploads/productos/auriculares-bluetooth/imagen-1.jpg",
+      "/uploads/productos/auriculares-bluetooth/imagen-2.jpg",
+      "/uploads/productos/auriculares-bluetooth/imagen-3.jpg"
+    ]
+  },
+  {
+    "carpeta": "zapatillas-deportivas",
+    "imagenes": [
+      "/uploads/productos/zapatillas-deportivas/imagen-1.jpg",
+      "/uploads/productos/zapatillas-deportivas/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "reloj-inteligente",
+    "imagenes": [
+      "/uploads/productos/reloj-inteligente/imagen-1.jpg",
+      "/uploads/productos/reloj-inteligente/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "chaqueta-cuero",
+    "imagenes": [
+      "/uploads/productos/chaqueta-cuero/imagen-1.jpg",
+      "/uploads/productos/chaqueta-cuero/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "mochila-viajera",
+    "imagenes": [
+      "/uploads/productos/mochila-viajera/imagen-1.jpg",
+      "/uploads/productos/mochila-viajera/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "sartenes",
+    "imagenes": [
+      "/uploads/productos/sartenes/imagen-1.jpg",
+      "/uploads/productos/sartenes/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "laptop-gamer",
+    "imagenes": [
+      "/uploads/productos/laptop-gamer/imagen-1.jpg",
+      "/uploads/productos/laptop-gamer/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "perfume",
+    "imagenes": [
+      "/uploads/productos/perfume/imagen-1.jpg",
+      "/uploads/productos/perfume/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "camara-dslr",
+    "imagenes": [
+      "/uploads/productos/camara-dslr/imagen-1.jpg",
+      "/uploads/productos/camara-dslr/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "yoga",
+    "imagenes": [
+      "/uploads/productos/yoga/imagen-1.jpg",
+      "/uploads/productos/yoga/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "teclado-mecanico",
+    "imagenes": [
+      "/uploads/productos/teclado-mecanico/imagen-1.jpg",
+      "/uploads/productos/teclado-mecanico/imagen-2.jpg"
+    ]
+  },
+  {
+    "carpeta": "robotica",
+    "imagenes": [
+      "/uploads/productos/robotica/imagen-1.jpg",
+      "/uploads/productos/robotica/imagen-2.jpg"
+    ]
+  }
+]
