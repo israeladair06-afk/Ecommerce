@@ -1,4 +1,4 @@
-mport { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ShoppingCart, Star, Heart, Eye, Truck, ShieldCheck } from 'lucide-react';
 import { useAppDispatch } from '../lib/hooks';
 import { addToCart } from '../store/slices/cartSlice';
