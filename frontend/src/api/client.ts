@@ -37,28 +37,17 @@ export const productsAPI = {
   getByCategory: (category: string) => api.get(`/products/category/${category}`),
   getFeatured: () => api.get('/products/featured'),
   search: (query: string) => api.get(`/products/search/${query}`),
-  create: (data: FormData) =>
-    api.post('/products', data, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    }),
-  update: (id: string, data: FormData) =>
-    api.put(`/products/${id}`, data, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    }),
+  create: (data: any) => api.post('/products', data),
+  update: (id: string, data: any) => api.put(`/products/${id}`, data),
   delete: (id: string) => api.delete(`/products/${id}`),
 };
 
 // API de Autenticación
 export const authAPI = {
-  login: (data: { email: string; password: string }) =>
-    api.post('/auth/login', data),
-  register: (data: { name: string; email: string; password: string }) =>
-    api.post('/auth/register', data),
+  login: (data: { email: string; password: string }) => api.post('/auth/login', data),
+  register: (data: { name: string; email: string; password: string }) => api.post('/auth/register', data),
   getProfile: () => api.get('/auth/profile'),
-  updateProfile: (data: FormData) =>
-    api.put('/auth/profile', data, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    }),
+  updateProfile: (data: any) => api.put('/auth/profile', data),
 };
 
 // API de Órdenes
@@ -66,38 +55,29 @@ export const ordersAPI = {
   getAll: () => api.get('/orders'),
   getById: (id: string) => api.get(`/orders/${id}`),
   create: (data: any) => api.post('/orders', data),
-  updateStatus: (id: string, status: string) =>
-    api.put(`/orders/${id}/status`, { status }),
+  updateStatus: (id: string, status: string) => api.put(`/orders/${id}/status`, { status }),
   getMyOrders: () => api.get('/orders/mine'),
 };
 
-// API de Carrito
-export const cartAPI = {
-  getCart: () => api.get('/cart'),
-  addToCart: (data: { productId: string; quantity: number }) =>
-    api.post('/cart', data),
-  updateCartItem: (productId: string, quantity: number) =>
-    api.put(`/cart/${productId}`, { quantity }),
-  removeFromCart: (productId: string) =>
-    api.delete(`/cart/${productId}`),
-  clearCart: () => api.delete('/cart'),
-};
-
-// API de Direcciones
-export const addressAPI = {
-  getAll: () => api.get('/addresses'),
-  getById: (id: string) => api.get(`/addresses/${id}`),
-  create: (data: any) => api.post('/addresses', data),
-  update: (id: string, data: any) => api.put(`/addresses/${id}`, data),
-  delete: (id: string) => api.delete(`/addresses/${id}`),
-};
-
-// API de Reseñas
-export const reviewAPI = {
-  getByProduct: (productId: string) => api.get(`/reviews/product/${productId}`),
-  create: (data: { productId: string; rating: number; comment: string }) =>
-    api.post('/reviews', data),
-  delete: (id: string) => api.delete(`/reviews/${id}`),
+// API de Subida de imágenes
+export const uploadAPI = {
+  uploadImage: (file: File, productId?: string) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    if (productId) formData.append('productId', productId);
+    return api.post('/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  uploadMultiple: (files: File[], productId?: string) => {
+    const formData = new FormData();
+    files.forEach(f => formData.append('images', f));
+    if (productId) formData.append('productId', productId);
+    return api.post('/upload/multiple', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  getProductImages: (productId: string) => api.get(`/upload/${productId}`),
 };
 
 // API de Pagos Stripe
