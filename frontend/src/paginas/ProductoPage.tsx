@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Star, Truck, ShieldCheck, ChevronRight, Minus, Plus, Check, Share2, ChevronLeft, Package, RefreshCw, HeadphonesIcon, Clock } from 'lucide-react';
-import { useAppDispatch } from '../lib/hooks';
+import { ShoppingCart, Star, Truck, ShieldCheck, ChevronRight, Minus, Plus, Check, Share2, ChevronLeft, Package, RefreshCw, HeadphonesIcon, Clock, Settings, Edit3 } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { addToCart } from '../store/slices/cartSlice';
 import { obtenerImagen } from '../utilidades/imagenes';
 import api from '../api/client';
@@ -12,6 +12,8 @@ const ProductoPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const esAdmin = user?.isAdmin === true;
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -247,20 +249,33 @@ const ProductoPage = () => {
                 <span className="text-sm text-gray-500">{quantity > 1 ? `${quantity} unidades` : '1 unidad'}</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button onClick={handleAddToCart} disabled={!product.inStock}
-                  className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-lg ${
-                    product.inStock ? 'bg-amber-400 hover:bg-amber-500 text-gray-900 active:scale-[0.98] shadow-amber-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}>
-                  <ShoppingCart size={18} /> {product.inStock ? 'Agregar al carrito' : 'Agotado'}
-                </button>
-                <button onClick={() => { handleAddToCart(); navigate('/checkout'); }} disabled={!product.inStock}
-                  className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 ${
-                    product.inStock ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}>
-                  <ShoppingCart size={18} /> Comprar ahora
-                </button>
-              </div>
+              {esAdmin ? (
+                <div className="grid grid-cols-1 gap-3">
+                  <Link to="/admin"
+                    className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                    <Settings size={18} /> Ir al Panel de Administración
+                  </Link>
+                  <Link to={`/admin?editar=${product._id}`}
+                    className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition border border-gray-200">
+                    <Edit3 size={18} /> Editar este producto
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button onClick={handleAddToCart} disabled={!product.inStock}
+                    className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-lg ${
+                      product.inStock ? 'bg-amber-400 hover:bg-amber-500 text-gray-900 active:scale-[0.98] shadow-amber-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}>
+                    <ShoppingCart size={18} /> {product.inStock ? 'Agregar al carrito' : 'Agotado'}
+                  </button>
+                  <button onClick={() => { handleAddToCart(); navigate('/checkout'); }} disabled={!product.inStock}
+                    className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 ${
+                      product.inStock ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}>
+                    <ShoppingCart size={18} /> Comprar ahora
+                  </button>
+                </div>
+              )}
 
               <div className="bg-green-50 rounded-xl p-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-green-700">

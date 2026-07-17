@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Star, Heart, Eye, Truck, ShieldCheck } from 'lucide-react';
-import { useAppDispatch } from '../lib/hooks';
+import { ShoppingCart, Star, Heart, Eye, Truck, ShieldCheck, Settings } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { addToCart } from '../store/slices/cartSlice';
 import { obtenerImagen } from '../utilidades/imagenes';
 import type { Product } from '../tipos';
@@ -11,6 +11,8 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const esAdmin = user?.isAdmin === true;
 
   const discount = product.mrp > product.price
     ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
@@ -19,6 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (esAdmin) return;
     dispatch(addToCart({
       _id: product._id,
       productId: product._id,
@@ -128,19 +131,28 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </p>
           )}
 
-          {/* Botón comprar */}
-          <button
-            onClick={handleAddToCart}
-            disabled={!product.inStock}
-            className={`w-full mt-2.5 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
-              product.inStock
-                ? 'bg-amber-400 hover:bg-amber-500 text-gray-900 active:scale-[0.97] shadow-sm'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            <ShoppingCart size={14} />
-            {product.inStock ? 'Agregar al carrito' : 'Agotado'}
-          </button>
+          {/* Botón comprar - Admin ve botón diferente */}
+          {esAdmin ? (
+            <Link to={`/admin?editar=${product._id}`}
+              className="w-full mt-2.5 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-100 transition border border-blue-200"
+            >
+              <Settings size={14} />
+              Gestionar producto
+            </Link>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              disabled={!product.inStock}
+              className={`w-full mt-2.5 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
+                product.inStock
+                  ? 'bg-amber-400 hover:bg-amber-500 text-gray-900 active:scale-[0.97] shadow-sm'
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              <ShoppingCart size={14} />
+              {product.inStock ? 'Agregar al carrito' : 'Agotado'}
+            </button>
+          )}
 
           {/* Prime */}
           {product.envioGratis && (
