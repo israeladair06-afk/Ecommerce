@@ -183,11 +183,23 @@ const Navbar = () => {
                 </Link>
               )}
 
-              {/* Pedidos */}
-              <Link to="/pedidos" className="hidden lg:flex flex-col items-center px-2 py-1.5 text-gray-600 hover:text-blue-600 transition rounded-lg hover:bg-blue-50">
-                <Package size={18} />
-                <span className="text-[10px] font-medium">Pedidos</span>
-              </Link>
+              {/* Pedidos / Admin */} 
+              {user?.isAdmin ? (
+                <Link to="/admin" className="hidden lg:flex flex-col items-center px-2 py-1.5 text-blue-600 hover:text-blue-700 transition rounded-lg hover:bg-blue-50 relative">
+                  <Settings size={18} />
+                  <span className="text-[10px] font-medium">Admin</span>
+                </Link>
+              ) : user ? (
+                <Link to="/pedidos" className="hidden lg:flex flex-col items-center px-2 py-1.5 text-gray-600 hover:text-blue-600 transition rounded-lg hover:bg-blue-50 relative">
+                  <Package size={18} />
+                  <span className="text-[10px] font-medium">Pedidos</span>
+                </Link>
+              ) : (
+                <Link to="/login?redirect=/pedidos" className="hidden lg:flex flex-col items-center px-2 py-1.5 text-gray-500 hover:text-blue-600 transition rounded-lg hover:bg-blue-50">
+                  <Package size={18} />
+                  <span className="text-[10px] font-medium">Pedidos</span>
+                </Link>
+              )}
 
               {/* Carrito */}
               <Link to="/carrito" className="relative flex items-center gap-1 px-2.5 py-1.5 text-gray-600 hover:text-blue-600 transition rounded-lg hover:bg-blue-50">

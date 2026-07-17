@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Star, Truck, ShieldCheck, ChevronRight, Minus, Plus, Check, Share2, ChevronLeft, Package, RefreshCw, HeadphonesIcon, Clock } from 'lucide-react';
 import { useAppDispatch } from '../lib/hooks';
 import { addToCart } from '../store/slices/cartSlice';
@@ -10,6 +10,7 @@ import type { Product } from '../tipos';
 
 const ProductoPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -253,7 +254,7 @@ const ProductoPage = () => {
                   }`}>
                   <ShoppingCart size={18} /> {product.inStock ? 'Agregar al carrito' : 'Agotado'}
                 </button>
-                <button onClick={handleAddToCart} disabled={!product.inStock}
+                <button onClick={() => { handleAddToCart(); navigate('/checkout'); }} disabled={!product.inStock}
                   className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 ${
                     product.inStock ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   }`}>

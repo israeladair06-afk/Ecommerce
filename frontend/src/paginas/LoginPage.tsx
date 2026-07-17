@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ShoppingCart, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
-import { loginUser } from '../store/slices/authSlice';
+import { loginUser, clearError } from '../store/slices/authSlice';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -10,13 +10,15 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect') || '/';
   const { loading, error } = useAppSelector((state) => state.auth);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = await dispatch(loginUser({ email, password }));
     if (loginUser.fulfilled.match(result)) {
-      navigate('/');
+      navigate(redirect);
     }
   };
 
@@ -39,8 +41,10 @@ const LoginPage = () => {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600 flex items-start gap-2">
+              <AlertCircle size={16} className="mt-0.5 shrink-0" />
               {error}
+              <button onClick={() => dispatch(clearError())} className="ml-auto text-red-400 hover:text-red-600">&times;</button>
             </div>
           )}
 
@@ -95,9 +99,16 @@ const LoginPage = () => {
             </button>
           </form>
 
+          {redirect !== '/' && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700 flex items-start gap-2 mt-4">
+              <AlertCircle size={16} className="mt-0.5 shrink-0" />
+              <span>Inicia sesión para continuar con tu compra</span>
+            </div>
+          )}
+
           <p className="text-center mt-6 text-sm text-gray-500">
             ¿No tienes cuenta?{' '}
-            <Link to="/registro" className="text-blue-600 hover:text-blue-700 font-medium">Regístrate</Link>
+            <Link to={`/registro?redirect=${encodeURIComponent(redirect)}`} className="text-blue-600 hover:text-blue-700 font-medium">Regístrate</Link>
           </p>
         </div>
       </div>
